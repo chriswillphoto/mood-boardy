@@ -60,12 +60,17 @@ var masonryCols = function(settings) {
     var cols = document.querySelectorAll('.Mood-column')
 
     for (var j=columnCount; j > 0; j--){
-      var tileIndex = tile.getAttribute("data-index")
-      if( parseInt(tileIndex) % j == 0 ){
-        console.log(tileIndex, j)
+      var tileIndex = parseInt(tile.getAttribute("data-index"))
+      while (tileIndex > columnCount){
+        tileIndex -= columnCount
+        console.log(tileIndex)
+      }
+
+      if( (tileIndex) % j == 0 ){
+        // console.log(tileIndex, j)
+        toAppend = tile.parentNode.removeChild(tile);
+        cols[j - 1].appendChild(toAppend)
         break
-        // toAppend = tile.parentNode.removeChild(tile);
-        // cols[j].appendChild(toAppend)
       }
     }
   }
