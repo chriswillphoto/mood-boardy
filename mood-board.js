@@ -24,17 +24,8 @@ var establishSettings = function(settings){
   return returnSettings
 }
 
-var masonryCols = function(settings) {
+var columnCounter = function(gridSettings){
   var columnCount;
-
-  var gridSettings = establishSettings(settings);
-
-  var grid = document.querySelector("." + gridSettings.container);
-  var tileList = [];
-
-  for (var node = 0; node < grid.children.length; node++) {
-    tileList.push(grid.children[node]);
-  }
 
   if (window.innerWidth < gridSettings.breakpoints[1]) {
     columnCount = 1;
@@ -48,7 +39,11 @@ var masonryCols = function(settings) {
     columnCount = 5;
   }
 
-  for (var i = 1; i <= columnCount; i++) {
+  return columnCount;
+}
+
+var addColumns = function(grid, currentCols, columnCount){
+  for (var i = 1 + currentCols; i <= columnCount; i++) {
     var col = document.createElement("div");
     col.classList.add("column-" + i);
     col.classList.add("Mood-column");
@@ -57,6 +52,33 @@ var masonryCols = function(settings) {
     col.style.boxSizing = "border-box";
     grid.appendChild(col);
   }
+}
+
+var masonryCols = function(settings) {
+  
+
+  var gridSettings = establishSettings(settings);
+  var columnCount = columnCounter(gridSettings);
+
+
+  var grid = document.querySelector("." + gridSettings.container);
+  var tileList = [];
+
+  for (var node = 0; node < grid.children.length; node++) {
+    tileList.push(grid.children[node]);
+  }
+
+
+
+  var columnList = document.querySelectorAll('.Mood-column');
+  var currentCols = columnList.length;
+
+  if( currentCols < columnCount ){
+    addColumns(grid, currentCols, columnCount);
+  }
+
+
+
 
   for (var i = 0; i < tileList.length; i++) {
     var tile = tileList[i];
