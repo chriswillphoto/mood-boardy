@@ -1,11 +1,8 @@
-var masonryCols = function(settings) {
-  var containerClass;
-  var gridSettings;
-  var columnCount;
-
+var establishSettings = function(settings){
+  var returnSettings;
   if (!settings) {
-    gridSettings = {
-      container: "mood-board",
+    returnSettings = {
+      container: "Mood-board",
       breakpoints: {
         1: 480,
         2: 768,
@@ -14,23 +11,29 @@ var masonryCols = function(settings) {
       }
     }; // default settings
   } else {
-    gridSettings = settings;
+    returnSettings = settings;
   }
-  
-  containerClass = gridSettings.container || "Mood-board";
-  gridSettings.breakpoints = gridSettings.breakpoints || {}
-  gridSettings.breakpoints[1] = gridSettings.breakpoints[1] || 480;
-  gridSettings.breakpoints[2] = gridSettings.breakpoints[2] || 768;
-  gridSettings.breakpoints[3] = gridSettings.breakpoints[3] || 992;
-  gridSettings.breakpoints[4] = gridSettings.breakpoints[4] || 1200;
 
-  
+  containerClass = returnSettings.container || "Mood-board";
+  returnSettings.breakpoints = returnSettings.breakpoints || {};
+  returnSettings.breakpoints[1] = returnSettings.breakpoints[1] || 480;
+  returnSettings.breakpoints[2] = returnSettings.breakpoints[2] || 768;
+  returnSettings.breakpoints[3] = returnSettings.breakpoints[3] || 992;
+  returnSettings.breakpoints[4] = returnSettings.breakpoints[4] || 1200;
 
-  var grid = document.querySelector("." + containerClass);
+  return returnSettings
+}
+
+var masonryCols = function(settings) {
+  var columnCount;
+
+  var gridSettings = establishSettings(settings);
+
+  var grid = document.querySelector("." + gridSettings.container);
   var childList = [];
 
   for (var node = 0; node < grid.children.length; node++) {
-    childList.push(grid.children[node])
+    childList.push(grid.children[node]);
   }
 
   if (window.innerWidth < gridSettings.breakpoints[1]) {
@@ -45,32 +48,38 @@ var masonryCols = function(settings) {
     columnCount = 5;
   }
 
-  for (var i=1; i<=columnCount; i++){
-    var col = document.createElement('div');
-    col.classList.add('column-'+i)
-    col.classList.add('Mood-column')
-    grid.appendChild(col)
+  for (var i = 1; i <= columnCount; i++) {
+    var col = document.createElement("div");
+    col.classList.add("column-" + i);
+    col.classList.add("Mood-column");
+    col.style.width = 100 / columnCount + "%";
+    col.style.textAlign = "center";
+    col.style.boxSizing = "border-box";
+    grid.appendChild(col);
   }
 
   for (var i = 0; i < childList.length; i++) {
     var tile = childList[i];
     tile.classList.add("Mood-tile");
+    tile.style.marginLeft = "auto";
+    tile.style.marginRight = "auto";
+    tile.style.width = "100%";
     tile.setAttribute("data-index", i + 1);
 
-    var cols = document.querySelectorAll('.Mood-column')
+    var cols = document.querySelectorAll(".Mood-column");
 
-    for (var j=columnCount; j > 0; j--){
-      var tileIndex = parseInt(tile.getAttribute("data-index"))
-      while (tileIndex > columnCount){
-        tileIndex -= columnCount
-        console.log(tileIndex)
+    for (var j = columnCount; j > 0; j--) {
+      var tileIndex = parseInt(tile.getAttribute("data-index"));
+      while (tileIndex > columnCount) {
+        tileIndex -= columnCount;
+        console.log(tileIndex);
       }
 
-      if( (tileIndex) % j == 0 ){
+      if (tileIndex % j == 0) {
         // console.log(tileIndex, j)
         toAppend = tile.parentNode.removeChild(tile);
-        cols[j - 1].appendChild(toAppend)
-        break
+        cols[j - 1].appendChild(toAppend);
+        break;
       }
     }
   }
