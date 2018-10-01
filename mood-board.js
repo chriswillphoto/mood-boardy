@@ -30,10 +30,10 @@ var masonryCols = function(settings) {
   var gridSettings = establishSettings(settings);
 
   var grid = document.querySelector("." + gridSettings.container);
-  var childList = [];
+  var tileList = [];
 
   for (var node = 0; node < grid.children.length; node++) {
-    childList.push(grid.children[node]);
+    tileList.push(grid.children[node]);
   }
 
   if (window.innerWidth < gridSettings.breakpoints[1]) {
@@ -58,8 +58,8 @@ var masonryCols = function(settings) {
     grid.appendChild(col);
   }
 
-  for (var i = 0; i < childList.length; i++) {
-    var tile = childList[i];
+  for (var i = 0; i < tileList.length; i++) {
+    var tile = tileList[i];
     tile.classList.add("Mood-tile");
     tile.style.marginLeft = "auto";
     tile.style.marginRight = "auto";
@@ -72,7 +72,6 @@ var masonryCols = function(settings) {
       var tileIndex = parseInt(tile.getAttribute("data-index"));
       while (tileIndex > columnCount) {
         tileIndex -= columnCount;
-        console.log(tileIndex);
       }
 
       if (tileIndex % j == 0) {
