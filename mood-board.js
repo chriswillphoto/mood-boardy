@@ -134,7 +134,7 @@ var masonryCols = function(settings) {
     }
   }) // eventlistener
 
-  var stylesheet = document.querySelector('link[rel="stylesheet"]');
+  var stylesheet = document.querySelector('link');
   var masonryStyles = document.createElement('style');
   masonryStyles.innerText = ".Mood-tile{ width: 100%; margin-left: auto; margin-right: auto;}.Mood-board{display: flex; flex-wrap: wrap;}"
   if(stylesheet){
