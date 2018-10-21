@@ -1,3 +1,6 @@
 # mood-boardy
 
-## A quicky library for the responsive pinterest layout
+## A little library to aid in the creation of the responsive pinteresty cascading tiles layout
+
+
+

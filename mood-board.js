@@ -74,9 +74,9 @@ var addContent = function(tileList, columnCount){
     for (var i = 0; i < tileList.length; i++) {
       var tile = tileList[i];
       tile.classList.add("Mood-tile");
-      tile.style.marginLeft = "auto";
-      tile.style.marginRight = "auto";
-      tile.style.width = "100%";
+      // tile.style.marginLeft = "auto";
+      // tile.style.marginRight = "auto";
+      // tile.style.width = "100%";
       tile.setAttribute("data-index", i + 1);
       for (var j = columnCount; j > 0; j--) {
         var tileIndex = parseInt(tile.getAttribute("data-index"));
@@ -133,6 +133,16 @@ var masonryCols = function(settings) {
       addContent(tileList, columnCount)
     }
   }) // eventlistener
+
+  var stylesheet = document.querySelector('link[rel="stylesheet"]');
+  var masonryStyles = document.createElement('style');
+  masonryStyles.innerText = ".Mood-tile{ width: 100%; margin-left: auto; margin-right: auto;}.Mood-board{display: flex; flex-wrap: wrap;}"
+  if(stylesheet){
+    console.log(stylesheet)
+    document.querySelector('head').insertBefore(masonryStyles, stylesheet)
+  }else{
+    document.querySelector('head').appendChild(masonryStyles);
+  }
 
 }; // end masonryCols function
 
