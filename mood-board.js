@@ -146,4 +146,4 @@ var masonryCols = function(settings) {
 
 }; // end masonryCols function
 
-masonryCols({ container: "whatever" });
+
